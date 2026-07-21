@@ -219,7 +219,12 @@ Open [http://localhost:5173](http://localhost:5173) in your web browser.
 - **PostgreSQL Dependency**: Requires a running PostgreSQL service. Cannot fallback to memory/SQLite without modifying the database adapter in Prisma.
 - **Stateless Expiry**: Tokens are currently single-use stateless entities.
 - **Future Enhancements**:
-  - Implement refresh token database rotations for prolonged logins.
-  - Implement a drag-and-drop Kanban Board layout.
-  - Integrate WebSockets for real-time multiplayer updates within a workspace.
-  - Track activity logs for collaborative task audits.
+  - **Role-Based Access Control (RBAC)**: Introduce granular permissions (`WORKSPACE_ADMIN`, `MANAGER`, `MEMBER`) to restrict task deletion, workspace settings, and user management.
+  - **Drag-and-Drop Kanban Board**: Add an interactive Kanban view for seamless status transitions (Todo ➔ In Progress ➔ Done).
+  - **Real-Time Collaboration**: Integrate WebSockets (Socket.io) or Server-Sent Events (SSE) for live workspace updates across team members.
+  - **Activity & Audit Logs**: Track historical audit trails for task edits, status changes, assignments, and deletion logs.
+  - **Email & Push Notifications**: Send automated email reminders (via Nodemailer/SendGrid) for upcoming or overdue task deadlines.
+  - **File Attachments & Cloud Storage**: Support uploading assets, documents, and screenshots per task using Amazon S3 or Cloudinary.
+  - **Refresh Token Rotation & OAuth2**: Implement secure refresh token rotations and third-party SSO (Google & GitHub authentication).
+  - **Advanced Analytics & Metrics**: Provide workspace burn-down charts, velocity tracking, and completion rate metrics.
+  - **Redis Caching & Rate Limiting**: Integrate Redis for query response caching and express-rate-limit to protect auth endpoints.
