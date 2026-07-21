@@ -1,0 +1,50 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Workspace {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  users     User[]
+  tasks     Task[]
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  password    String
+  workspaceId Int
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  createdAt   DateTime  @default(now())
+  tasks       Task[]    @relation("TaskAssignee")
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+model Task {
+  id           Int        @id @default(autoincrement())
+  title        String
+  description  String?
+  status       TaskStatus @default(TODO)
+  assigneeId   Int
+  assignee     User       @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  workspaceId  Int
+  workspace    Workspace  @relation(fields: [workspaceId], references: [id])
+  parentTaskId Int?
+  parentTask   Task?      @relation("TaskParentChild", fields: [parentTaskId], references: [id], onDelete: Cascade)
+  childTasks   Task[]     @relation("TaskParentChild")
+  dueDate      DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
